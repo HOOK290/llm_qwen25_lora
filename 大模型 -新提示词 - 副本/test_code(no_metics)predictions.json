@@ -1,0 +1,702 @@
+[
+  {
+    "index": 1,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_list_registered_mobile_phone__empty(self) -> None:\n    \"\"\"\n    Given:\n        - a redis key\n        - a redis container without mobile phones registered\n    When i list registered mobile phones\n    Then i get a response with 404 status\n    \"\"\"\n    random_suffix = str(random.SystemRand"
+  },
+  {
+    "index": 2,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_rating(self) -> None:\n    \"\"\"\n    Given a delivery\n    When I rate\n    Then 200 OK\n    \"\"\"\n    self.client = AuthenticatedClient()\n    order = self.any_order(user=self.client.user, api_version=API_VERSION)\n    delivery = self.any_delivery(order=order, api_version=API_VERSION)\n\n    sel"
+  },
+  {
+    "index": 3,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_add_booking__closed(self) -> None:\n    \"\"\"\n    Given:\n        - a booking with a drop off time tomorrow\n        - station closed tomorrow\n        - a cart\n    When i create carte item\n    Then I get HTTP 400\"\"\"\n    self.client = AuthenticatedClient()\n    now = timezone.make_aware(date"
+  },
+  {
+    "index": 4,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_add_credits_to_fleet_prepaid_accounts__not_apply(self) -> None:\n    fleet_prepaid_account = self.any_prepaid_account__fleet()\n    user = fleet_prepaid_account.owner\n    user.is_fleet_owner = False\n    user.save()\n\n    data = {\n        \"action\": \"add_credits_to_fleet_prepaid_accounts\","
+  },
+  {
+    "index": 5,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "has_mocks: 1",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_unpublish_master_scenario_maia_error(self) -> None:\n    \"\"\"\n    Given a master scenario\n    When I unpublish the scenario with maia exception\n    Then I get a 502 HTTP response\n    \"\"\"\n    panel_scenario = self.any_scenario(hss=self.client.hss, state=states.publish"
+  },
+  {
+    "index": 6,
+    "true_label": 3,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_get_contracts_related_user_delegation_full_with_delegation_limted(self) -> None:\n    \"\"\"\n    Given a contract with with user\n    Given other contract\n    Given a delegation to other contract with limited access\n    When I get_contracts_related_user with full\n    Then I have one contra"
+  },
+  {
+    "index": 7,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_loader_twip__corporation(self) -> None:\n    autowash = load(\"autowash_twip_corporation.json\")\n    loader = AutowashLoader()\n    station = loader.as_instance(autowash)[0]\n    assert_that(station.operator.seller_type, is_(seller_types.tmf))\n"
+  },
+  {
+    "index": 8,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_transactions_payload(self) -> None:\n    \"\"\"\n    Given any hss\n    Given a user name that contains space\n    When I add a code and create transaction\n    Then the transaction payload is good\n    \"\"\"\n    hss = self.any_hss(remote_proxy=remote_proxies.honeywell)\n    code = self.any_honey"
+  },
+  {
+    "index": 9,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_update_hss_group__daily_to_daily(self) -> None:\n    \"\"\"\n    Given : A logged in User with email, an HSS with group == 'daily'\n    When : I update group of this HSS to 'daily'\n    Then : status code of the response is 201\n           HSS in the response body have ent"
+  },
+  {
+    "index": 10,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_shipping_type__single_value(self) -> None:\n    \"\"\"\n    Given\n        request_infos form data\n        global conf with one value\n    When I validate\n    Then request_infos is valid, field is hidden\n    \"\"\"\n    conf = GlobalConfiguration.objects.get(definition__name=\"request.shipping_ty"
+  },
+  {
+    "index": 11,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_performance__list(self) -> None:\n    \"\"\"\n    Given an order\n    When I retrieve order\n    Then the reponse is 200, query number is acceptable\n    \"\"\"\n\n    self.client = AuthenticatedClient(mangopay_card=mangopay_cards.normal)\n    num_orders = 2\n\n    for n in range(1, num_orders):\n    "
+  },
+  {
+    "index": 12,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_get_complete_checkout_adapter(self) -> None:\n    checkout = self.any_checkout()\n    payment = PaymentMethodProvider()\n    with self.assertRaises(NotImplementedError) as e:\n        assert_that(payment.complete_checkout(checkout), is_(e))\n"
+  },
+  {
+    "index": 13,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_keypads_driver_not_implemented(self) -> None:\n    hss = self.any_hss()\n    driver = HssDriver(hss)\n    with self.assertRaises(NotImplementedError):\n        driver.keypads\n"
+  },
+  {
+    "index": 14,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_start_processing__another_user(self) -> None:\n    \"\"\"\n    Given\n        a user authenticated\n        a delivery in ready state from another user\n    When I post start processing action\n    Then 404 not found\n    \"\"\"\n    self.client = AuthenticatedClient()\n    delivery = self.any_deliv"
+  },
+  {
+    "index": 15,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\ndef test_request_formatter__pickup_city__no_steps(self) -> None:\n    \"\"\"\n    Given a request without request\n    When I use RequestFormatter with 'pickup_city' field to export\n    Then it return a dict that contain request pickup city as empty string\n    \"\"\"\n    request = self.any_request()\n  "
+  },
+  {
+    "index": 16,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2 (medium quality): has_mock",
+    "input_preview": "Code:\ndef test_rated_android(self) -> None:\n    \"\"\"\n    Given a registered user that has rated the android app or has chosen to never rate it\n    Then return False\n    \"\"\"\n    user = self.any_user()\n    app_rating = self.any_app_rating(user, android_state=app_rating_state.rated)\n\n    spec = UserFeed"
+  },
+  {
+    "index": 17,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_request_formatter__merchandises(self) -> None:\n    \"\"\"\n    Given any request packaging units mode\n    When I use RequestFormatter with 'merchandises' field to export\n    Then it return a dict that contain request merchandises\n    \"\"\"\n    request = self.any_request(transport_service=tr"
+  },
+  {
+    "index": 18,
+    "true_label": 1,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_list_resynchro_task_for_contract__bad_contract_number(self) -> None:\n    hss = self.any_hss()\n    self.any_resynchro_task(hss=hss, source=resynchro_task_sources.private_api)\n    url = reverse(\"private:v34:scenarios:resynchrotask-list\")\n    response = self.client.get(url, data={\"contra"
+  },
+  {
+    "index": 19,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_offered_credits_pack(self) -> None:\n    \"\"\"\n    Given any promocode from promotional campaign\n    When I use it\n    Then order has promocode_type = offered_credits_pack\n    \"\"\"\n\n    credits_pack = self.any_credits_pack(credits=100)\n    self.any_credits_pack_scheduler(\n        credits_"
+  },
+  {
+    "index": 20,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "Metrics:\nline_count:",
+    "input_preview": "Code:\ndef test_login_anonymous__with_same_nonce(self) -> None:\n    cache.delete(\"nonce.used.same_nonce\")\n    self.any_default_promocode()\n    consumer = self.any_consumer()\n    self.client = SignedKleenClient(consumer=consumer, nonce=\"same_nonce\")\n\n    self.when_i_login_anonymously(api_key=self.clie"
+  },
+  {
+    "index": 21,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_list__is_frauder_by_phone_validation(self) -> None:\n    self.client = AuthenticatedClient()\n    self.client.user.is_frauder = True\n    self.client.user.frauder_reason = frauder_reasons.phone_validation_fail\n    self.client.user.last_frauder_update = timezone.now()\n    self.client.user"
+  },
+  {
+    "index": 22,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_list_delegations_role_full(self) -> None:\n    \"\"\"\n    Given a hss with a delegation with full role\n    When I list captures\n    Then I get 200\n    \"\"\"\n    hss = self.client.hss\n    self.client = HoneywellAPIClient()\n    DelegationMixin().any_delegation(\n        contract=hss.site.contr"
+  },
+  {
+    "index": 23,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_admin(self) -> None:\n\n    with assertNumLessEqualQueries(self, 10):\n        self.last_response = self.client.get(\n            reverse(\n                f\"kleenapi_admin_site:{Token._meta.app_label}_{Token._meta.model_name}_changelist\",\n            )\n        )\n        assert_that(self.l"
+  },
+  {
+    "index": 24,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_leave(self) -> None:\n    state_scenarios = [\n        {\"actual\": request_states.initial, \"expected\": request_states.dropped},\n    ]\n    for scenario in state_scenarios:\n        with self.subTest(scenario=scenario):\n            request = self.any_framed_request(state=scenario[\"actual\"],"
+  },
+  {
+    "index": 25,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_list_scenarios_maia(self) -> None:\n    \"\"\"\n    Given a client with contract supporting 'connected home'\n    Given a scenario Maia\n    When I list scenario\n    Then 200\n    Then I have 1 scenario with device pk in the action\n    \"\"\"\n    self.client.hss.site.contract"
+  },
+  {
+    "index": 26,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_request_token_with_url_query(self) -> None:\n    self._request_token(METHOD_URL_QUERY)\n"
+  },
+  {
+    "index": 27,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_add_needed_migration__already_present(self) -> None:\n    hss = self.client.hss\n    self.any_migration(hss=hss, type=migration_types.bec4)\n\n    self.when_i_add_needed_migration(hss=hss, migration_type=migration_types.bec4)\n\n    assert_that(self.last_response.status_"
+  },
+  {
+    "index": 28,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_retrieve_pdf__not_logged(self) -> None:\n    self.user = self.any_user()\n    pdf_url = \"userbill/2024/11/11/MP.pdf\"\n    order = self.any_order(user=self.any_user(), status=order_states.success)\n    order.bill_user.name = pdf_url\n    order.save()\n    self.when_i_retrieve_s3_file(pdf_pat"
+  },
+  {
+    "index": 29,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_list_policies_card(self) -> None:\n    \"\"\"\n    Given a policy\n    When I list policys card\n    Then PolicyRepository is called 1 time\n    \"\"\"\n    self.client = AuthenticatedClient()\n    self.any_policy()\n\n    with mock.patch(\"kleen.policy.repositories.policy.PolicyRepository.get_all\") "
+  },
+  {
+    "index": 30,
+    "true_label": 3,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_send__station_has_another_best_deal(self) -> None:\n    \"\"\"\n    Given :\n     - an order sold there is more than 60 days\n     - a user without frequency\n     - a notifier in idle state\n    When refreshing notifier\n    Then notifier:\n     - is in idle state\n     - notification time is no"
+  },
+  {
+    "index": 31,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_validation_type__update__on_request_type_update(self) -> None:\n    \"\"\"\n    Given\n        a request r1 on draft state with validation 1\n        a request r2 on tms_transmission state with validation 1\n    When i update request type validation type to 2\n    Then\n        r1 validation ty"
+  },
+  {
+    "index": 32,
+    "true_label": 3,
+    "pred_label": 2,
+    "raw_generation": "2 (medium quality): has_mock",
+    "input_preview": "Code:\ndef test_download_export(self) -> None:\n    \"\"\"\n    Given a request export in complete state with attachment\n    When I load export\n    Then 200 OK\n    \"\"\"\n    request_export = self.any_request_export(creator=self.client.user, state=request_export_states.completed)\n    assert request_export.fi"
+  },
+  {
+    "index": 33,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_rules__no_permission(self) -> None:\n    \"\"\"\n    Given\n        a user creator u1 with no role\n        a global rule ON\n        a request\n    When I find users\n    Then nothing is returned\n    \"\"\"\n    u1 = self.any_user(roles=[])\n    request = self.any_request(state=\"draft\", creator=u1)"
+  },
+  {
+    "index": 34,
+    "true_label": 3,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_permissions__team_request(self) -> None:\n    \"\"\"\n    Tests every quoted permission on every state for every roles and every request types (my / team / other)\n    \"\"\"\n    team_request = self.any_quoted_request(creator=self.u2, state=state)\n    for role in permission_roles.all:\n        "
+  },
+  {
+    "index": 35,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\ndef test_order_adapter__product_voucher(self) -> None:\n    \"\"\"\n    Given any order with order item with product voucher\n    When I put it in OrderAdapter\n    Then I get a valid message with\n        - deal_info\n    \"\"\"\n    order = self.any_order(with_product_voucher=True)\n\n    adapter = OrderAd"
+  },
+  {
+    "index": 36,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_filter_request__team_requests_in(self) -> None:\n    self.any_request(creator=self.client.user)\n    requests_list = (\n        RequestListPage.get(client=self.client, site_slug=self.client.sites[0].slug)\n        .request_filter.apply(data={\"requests_type\": team_requests.mine}, next_page"
+  },
+  {
+    "index": 37,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_order_from_twip_booking__no_deal(self) -> None:\n    booking = BookingMixin().any_twip_api_booking(is_deal=False)\n    order = OrderItem.objects.filter(booking_pk=booking.pk).first().order\n    for order_item in order.orderitem_set.all():\n        purchase = booking.purchase_set.filter(ra"
+  },
+  {
+    "index": 38,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_form__requested_time__timezone(self) -> None:\n    request = self.any_request(state=request_states.draft, ready_to_submit=True)\n    step = request.steps.first()\n    data = self.any_step_form_data(steps=request.steps.all())\n    data[\"steps-0-timezone\"] = \"Europe/Moscow\"\n    data_date = "
+  },
+  {
+    "index": 39,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "The code has no mocks (has",
+    "input_preview": "Code:\ndef test_form__merge_carriage(self) -> None:\n    \"\"\"\n    Given a request with 2 step carriage\n    When i save step form with one updated, one deleted and one new carriage\n    Then it has been merged\n    \"\"\"\n    request = self.any_request(\n        state=request_states.draft,\n        ready_to_su"
+  },
+  {
+    "index": 40,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\ndef test_promotional_offer_two_required_discounted_multiple_sequential(self) -> None:\n    \"\"\"\n    Given a station with promotional offer\n        for a discounted item with two required items\n    When\n        I add two of each required item to cart\n        I add discounted items to cart\n       "
+  },
+  {
+    "index": 41,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_serializer(self) -> None:\n    request = self.any_request(\n        state=request_states.draft, with_attachments=[request_attachments.request_attachment]\n    )\n    serializer = RequestSerializer(request)\n    assert_that(serializer.data, is_(request_data(request=request)))\n    assert_tha"
+  },
+  {
+    "index": 42,
+    "true_label": 3,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_encode__incorrect_condition(self) -> None:\n    \"\"\"\n    Given a scenario with a condition with values incorrect (start_time > end_time)\n    When I encode this scenario\n    Then I get an exception described by a dict with entries for the fields incorrect\n    \"\"\"\n    "
+  },
+  {
+    "index": 43,
+    "true_label": 3,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_prepaid_account_amount(self) -> None:\n    \"\"\"\n    Given a user with a credit pack of 6€ redeemed\n    When i get prepaid account amount\n    Then i get a string == 6€\n    \"\"\"\n    user = self.any_user(with_credits=True)\n    assert_that(user.prepaid_account_amount, is_(\"6.0€\"))\n"
+  },
+  {
+    "index": 44,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_cart__update__promocode__offered_washing__remove(self) -> None:\n    \"\"\"\n    Given\n        a cart with a promocode offered washing\n    When i remove promocode from cart\n    Then a cart item  linked to a deal type offered washing doesn't exist anymore\n    \"\"\"\n    promocode = self.any_pr"
+  },
+  {
+    "index": 45,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_call(self) -> None:\n    spec = SpecificationA()\n    assert_that(spec(None), is_(True))\n"
+  },
+  {
+    "index": 46,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "has_mocks: 1",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_update_name__polling_commit_response_decode_error(self) -> None:\n    \"\"\"\n    Given\n        - a Hss with a honeywell panel\n        - a HssDriver\n        - a honeywell camera\n    When\n        - I update camera name with a polling response with wrong json\n    Then\n   "
+  },
+  {
+    "index": 47,
+    "true_label": 3,
+    "pred_label": 2,
+    "raw_generation": "2 (medium quality): has_mock",
+    "input_preview": "Code:\ndef test_leave__from_initial(self) -> None:\n    \"\"\"\n    given a request in initial state\n    when i leave\n    then request is in dropped state\n    \"\"\"\n    request = self.any_quoted_request(state=request_states.initial, ready_to_submit=False)\n    request.state_machine(user=request.creator).leav"
+  },
+  {
+    "index": 48,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_signals__promotional_campaign_delete(self) -> None:\n    promotional_campaign = self.any_promotional_campaign()\n    with mock.patch(\"tw.replication.sites.ReplicationClient.unpublish\") as m:  # noqa: RMS102\n        promotional_campaign.delete()\n    m.assert_called_once()\n"
+  },
+  {
+    "index": 49,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_str(self) -> None:\n    camera = self.any_local_essentielle_camera()\n    assert_that(str(camera), is_(f\"Camera {camera.id} [name: {camera.name}]\"))\n"
+  },
+  {
+    "index": 50,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2 (medium quality): has_mock",
+    "input_preview": "Code:\ndef test_action_deactivate_promocodes(self) -> None:\n    promocode = self.any_promocode()\n    self.when_i_export_promocodes(action=\"deactivate_promocodes\", ids=[promocode.pk])\n    promocode.refresh_from_db()\n    assert_that(promocode.disabled, is_(True))\n"
+  },
+  {
+    "index": 51,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_fast_status_serializer(self) -> None:\n    data = {\n        \"Prom\": \"0031000001\",\n        \"SiteId\": \"867430a0-fc58-4338-82ad-dcc2693c9668\",\n        \"DiffusedDate\": \"2019-04-16T11:27:09.1458338+02:00\",\n        \"OperatingState\": operation_states.on,\n    }\n    serializer = FastStatusEvent"
+  },
+  {
+    "index": 52,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_serialize_scenario__invalid_action_data(self) -> None:\n    \"\"\"\n    Given : Scenario invalid data\n    When : I serialize this data\n    Then : I get a validation error\n    \"\"\"\n    hss = self.client.hss\n    driver = hss.driver\n    json_data = load(\"update_scenario_inv"
+  },
+  {
+    "index": 53,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_not_acknowledged_tms_transmission_false_timezone(self) -> None:\n    \"\"\"\n    Given a request in state tms_transmission with state_changed < 1hour\n    and acknowledged_version != current request version\n    When I try retrieve metric for not_acknowledged_tms_transmission\n    Then I get "
+  },
+  {
+    "index": 54,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1 (low quality): has_mock",
+    "input_preview": "Code:\ndef test_retrieve__not_found(self) -> None:\n    self.client = AuthenticatedClient()\n    self.when_i_retrieve_checkout(checkout_id=1234)\n\n    assert_that(self.last_response, http(404))\n"
+  },
+  {
+    "index": 55,
+    "true_label": 1,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_promotional_offer_discounted_multiple_remove_discounted(self) -> None:\n    \"\"\"\n    Given a cart with promotional offer for a discounted item having two items\n    When I remove a discounted item\n    Then\n        One discounted item is left\n        Two required items are left\n    \"\"\"\n  "
+  },
+  {
+    "index": 56,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_serialize_scenario__state_unpublishing(self) -> None:\n    \"\"\"\n    Given : A scenario with state == unpublishing\n    When : I serialize this scenario\n    Then : I get a dict corresponding to the scenario i serialized, state == fail\n    \"\"\"\n    hss = self.client.hss\n"
+  },
+  {
+    "index": 57,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\ndef test_order__from_cross_selling(self) -> None:\n    \"\"\"\n    Given an order with a deal for a washing program\n    When I complete this order with from_cross_selling = True\n    Then the order item from_cross_selling is True\n    \"\"\"\n    user = self.any_user(mangopay_card=mangopay_cards.normal, "
+  },
+  {
+    "index": 58,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_hss_status_serialization__probe_alert(self) -> None:\n    \"\"\"\n    Given probe in alert status\n    Given an hss kiz 3 (climax + home_automation)\n    When i serialize\n    Then status is unknow\n    \"\"\"\n    probe = Probe.objects.get()\n    probe.status = status.alert\n    probe.save()\n    se"
+  },
+  {
+    "index": 59,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_list_scenarios_maia_error(self) -> None:\n    \"\"\"\n    When I list scenario with maia error\n    Then 502\n    \"\"\"\n    with requests_mock.Mocker() as m:\n        m.get(requests_mock.ANY, status_code=500)\n        last_response = self.when_i_list_scenarios()\n    assert_that(last_response.sta"
+  },
+  {
+    "index": 60,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_process_user_response__json_decode_error(self) -> None:\n    driver = IMTDriver()\n    account = default_climax_account\n    with mock.patch(\"requests.Response.json\", side_effect=JSONDecodeError(\"test\", \"test\", 0)):  # noqa: RMS102\n        assert_that(\n            cal"
+  },
+  {
+    "index": 61,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_list_scenario_type_universe(self) -> None:\n    \"\"\"\n    Given : 6 inital scenarios type universe for panel_type hme_ip, 3 with country_code 'fr',\n            3 with country_code 'it'\n    When : I list scenario type universe\n    Then : Http response is 200, response "
+  },
+  {
+    "index": 62,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_deal_form_market_place_coupon_program_price_less_than_zero(self) -> None:\n    washing_program = self.any_washing_program__market_place()\n    washing_program.price = decimal.Decimal(\"0\")\n    washing_program.save(update_fields=[\"price\"])\n    data = {\n        \"type\": deal_types.washing,\n"
+  },
+  {
+    "index": 63,
+    "true_label": 3,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_update_scenarios__second_user(self) -> None:\n    \"\"\"\n    Given : A dict representing a scenario with new condition for a user\n    When : I put this dict for a second user\n    Then : I get a 404 HTTP response\n    \"\"\"\n    self.client = ClimaxEssentiellePapillonClient"
+  },
+  {
+    "index": 64,
+    "true_label": 3,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_request_formatter_additional_quote_quantity_3_framed(self) -> None:\n    \"\"\"\n    Given a framed request\n    When I use RequestFormatter with 'additional_quote_quantity_3' field to export\n    Then it return a dict that contain request additional_quote_quantity_3\n    \"\"\"\n    request = se"
+  },
+  {
+    "index": 65,
+    "true_label": 1,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_formattedtimefield(self) -> None:\n    timefield = \"06:00\"\n    assert_that(\n        FormattedTimeField().to_representation(timefield),\n        is_(\n            (FormattedTimeField().to_representation(datetime.strptime(timefield, \"%H:%M\").time())),\n        ),\n    )\n"
+  },
+  {
+    "index": 66,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_form_invalid__negative(self) -> None:\n    zone_context = self.any_zone_context()\n    data = {\"discount\": -10, \"percentage\": 0, \"zone_context\": zone_context.pk}\n    form = GivePromocodeForm(issue=None, data=data)\n    assert_that(form.is_valid(), is_(False))\n"
+  },
+  {
+    "index": 67,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_begin(self) -> None:\n    state_scenarios = [{\"actual\": request_states.planned, \"expected\": request_states.in_progress}]\n    for scenario in state_scenarios:\n        with self.subTest(scenario=scenario):\n            request = self.any_framed_request(state=scenario[\"actual\"], creator=se"
+  },
+  {
+    "index": 68,
+    "true_label": 3,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_global_discount(self) -> None:\n    \"\"\"\n    Given any order with global discount promocode\n    Then promocode_type is cart_discount_percentage\n    \"\"\"\n    user = self.any_user(mangopay_card=mangopay_cards.normal, with_mp_user=True)\n    product = self.any_product()\n    promocode = self."
+  },
+  {
+    "index": 69,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_list__unauthenticated(self) -> None:\n    self.client = Client()\n    self.when_i_list_addresses()\n    assert_that(self.last_response.status_code, is_(status.HTTP_403_FORBIDDEN))\n"
+  },
+  {
+    "index": 70,
+    "true_label": 1,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\ndef test_tl12(self) -> None:  # pragma: no cover # noqa: RMS201\n    \"\"\"\n    Given\n        a tl12 program\n        a deal with this program\n        a cart with this deal\n        a checkout with this cart\n    When order is success\n    Then order item has a code length 8\n    \"\"\"\n    washing_progra"
+  },
+  {
+    "index": 71,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_checkout__pending__remove_prepaid_account(self) -> None:\n    \"\"\"\n    Given\n        a cart prepaid account linked\n    when i start checkout\n    then checkout is in remove_prepaid_account state\n    \"\"\"\n    user = self.any_user(mangopay_card=mangopay_cards.normal)\n    cart = self.any_car"
+  },
+  {
+    "index": 72,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "0",
+    "input_preview": "Code:\ndef test_serializer(self) -> None:\n    \"\"\"\n    Given:\n        - a \"devices\" instance composed by (a powerswitch, a blind, a camera,\n        a thermometer, an opening detector, a siren, a keypad, an emergency key,smoke detector,\n        flood detector, remote control, ir detector)\n    When:\n   "
+  },
+  {
+    "index": 73,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_decode(self) -> None:\n    \"\"\"\n    Given\n        a panel scenario with valid condition / action\n    When I decode\n    Then ScenarioInfo has valid condition / action\n    \"\"\"\n    contract = ContractMixin().any_climax_contract()\n    hss = HssMixin().any_hss(user=contra"
+  },
+  {
+    "index": 74,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_add_carriage(self) -> None:\n    request = self.any_request(\n        state=request_states.initial,\n        ready_to_submit=True,\n        creator=self.client.user,\n        with_step_units=False,\n        with_packaging_units=False,\n        with_carriages=True,\n    )\n    page = RequestUpd"
+  },
+  {
+    "index": 75,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_product_discount__credit_pack_discount__prices(self) -> None:\n    \"\"\"\n    Given any any promocode for discount on credit_pack\n    When I use this promocode with product in cart\n    Then orderitem has:\n        - corrected_price_before_discount is equalt to credits_pack_price\n        - "
+  },
+  {
+    "index": 76,
+    "true_label": 3,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_replication__on_creation(self) -> None:\n    \"\"\"\n    When I create user quoted notifications settings\n    Then resource kafka message is send\n    \"\"\"\n    with assert_signal_called(obj_published, matcher=greater_than_or_equal_to(1)):\n        self.any_user_quoted_notifications_settings()"
+  },
+  {
+    "index": 77,
+    "true_label": 3,
+    "pred_label": 2,
+    "raw_generation": "2 (medium quality): has_mock",
+    "input_preview": "Code:\ndef test_serializer__site(self) -> None:\n    \"\"\"\n    Given any user framed notification settings with any site\n    When I serialized it\n    Then I get valid json representation\n    \"\"\"\n    site = SiteMixin().any_site()\n    settings = self.any_user_framed_notifications_settings(site=site)\n    d"
+  },
+  {
+    "index": 78,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "Metrics:\nline_count:",
+    "input_preview": "Code:\ndef test_retrieve_order__prepaid_account_mangopay(self) -> None:\n    \"\"\"\n    Given an order with prepaid_account_mangopay\n    When I describe order\n    Then I get\n        - a 200 OK\n        - payment_share_mangopay equal to sold_price\n        - payment_share_prepaid_account equal to prepaid_ac"
+  },
+  {
+    "index": 79,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_add_file(self, *mocks) -> None:\n    # given :\n    # - A user natural\n    # - A document with status CREATED of type IDENTITY_PROOF\n    # When :\n    # - I add file\n    # - I update document\n    # Then\n    # - Document is status validation_asked\n    mangopay_user = self.any_user_with_ma"
+  },
+  {
+    "index": 80,
+    "true_label": 3,
+    "pred_label": 1,
+    "raw_generation": "has_docstring: 1",
+    "input_preview": "Code:\ndef test_notify_users__quoted_on_enter_state__cancelled(self) -> None:\n    \"\"\"\n    Given\n        a quoted request in cancelled state\n        a global rule set as \"should_send\" for aborted state\n    When I call \"notify_users\"\n    Then \"send_mail\" is called\n    \"\"\"\n    request = self.any_quoted_"
+  },
+  {
+    "index": 81,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_delivery__expiration(self) -> None:\n    \"\"\"\n    Given a delivery with lifetime dispenser made 1 hour\n    Then archived is True\n    \"\"\"\n    one_hour_ago = timezone.now() - timezone.timedelta(hours=1)\n    with freeze_time(one_hour_ago, tick=True):\n        washing_program = self.any_wash"
+  },
+  {
+    "index": 82,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\n@override_settings(NEED_DEFAULT_PROMOCODE=True)\ndef test_update__anonymous(self) -> None:\n    self.client = AnonymousClient()\n    self.when_i_create_card_registration()\n\n    assert_that(self.last_response, http(403))\n"
+  },
+  {
+    "index": 83,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_serializer__invalid(self) -> None:\n    climax_panel_cond_post_json = load(\"climax_panel_device_post_invalid.json\")\n    serializer = UpdateResponseSerializer(data=climax_panel_cond_post_json)\n    assert_that(calling(serializer.is_valid).with_args(raise_exception=True), raises(Validatio"
+  },
+  {
+    "index": 84,
+    "true_label": 1,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_resynchro_scenario_with_exception(self) -> None:\n    \"\"\"\n    Given the hss of account test.ripplemotion@gmail.com\n          with a scenario published with is_on == True and unknow source_id list\n          with a scenario published with is_on == True and correct sou"
+  },
+  {
+    "index": 85,
+    "true_label": 1,
+    "pred_label": null,
+    "raw_generation": "0",
+    "input_preview": "Code:\ndef test_ios_set_later_after_later(self) -> None:\n    \"\"\"\n    Given a registered user that has chosen to rate the app later\n    When he chooses to rate the app later again\n    Then the AppRating for android is set to later\n    \"\"\"\n    user = self.any_user()\n    app_rating = self.any_app_rating"
+  },
+  {
+    "index": 86,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_add_um__does_not_increment_request_version(self) -> None:\n    request = self.any_framed_request(state=request_states.initial)\n    request_version = request.version\n    request = request.state_machine(user=request.creator).add_um().request\n    assert_that(request.version == request_ver"
+  },
+  {
+    "index": 87,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_corporation_invoice_bill_dir(self) -> None:\n    path = corporation_invoice_bill_dir(None, self.filename)\n    expected_path = f\"bill/corporation-invoice_bill/{self.date.strftime('%Y/%m/%d')}/test_file.txt\"\n    self.assertEqual(path, expected_path)\n"
+  },
+  {
+    "index": 88,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_is_specific__depth(self) -> None:\n    \"\"\"\n    Given a request without pu\n    When i save form with specific height (> 13,5m)\n    Then request is specific load_type\n    \"\"\"\n    request = self.any_request(state=request_states.draft, ready_to_submit=False)\n    data, files = self.any_pack"
+  },
+  {
+    "index": 89,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "0. docstring_strength:",
+    "input_preview": "Code:\ndef test_request__on_accepted_quote(self) -> None:\n    \"\"\"\n    Given a request in state quote_proposal\n    When a request on_accepted_quote\n    Then the request history_quote is in state accepted\n    \"\"\"\n    request = self.any_quoted_request(state=request_states.quote_proposal)\n\n    history_co"
+  },
+  {
+    "index": 90,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks: 0",
+    "input_preview": "Code:\ndef test_order__credit_pack(self) -> None:\n    \"\"\"\n    Given an credit pack order in success state\n    Then payline transaction has order_reference_detail.credits_pack\n    \"\"\"\n    user = self.any_user(with_total_gr_card=True)\n    order = self.any_order(\n        user=user,\n        status=order_"
+  },
+  {
+    "index": 91,
+    "true_label": 1,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_list_promocode(self) -> None:\n    self.client = AuthenticatedClient()\n    code = self.any_promo_code(is_listed=True)\n    self.when_i_list_promo_code()\n    self.then_http_status_is(200)\n\n    promo_code = self.last_response.data\n    fields = promo_code[0][\"fields\"]\n    self.assertTrue(f"
+  },
+  {
+    "index": 92,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\ndef test_list_policies_about(self) -> None:\n    \"\"\"\n    Given many policies about, an authenticated user\n    When I list policies about\n    Then I get a response with :\n        - a code 200\n        - only Wash app policies\n    \"\"\"\n    policy_1 = self.any_policy(tos_type=TosType.MANGOPAY_POLICY"
+  },
+  {
+    "index": 93,
+    "true_label": 3,
+    "pred_label": 1,
+    "raw_generation": "1 (low quality): has_mock",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_list_scenarios__incorrect_hss(self) -> None:\n    \"\"\"\n    Given : A scenario\n    When : I list scenarios, for an unexistent hss\n    Then : I get a 404 HTTP response\n    \"\"\"\n    self.any_scenario(hss=self.client.hss)\n    last_response = self.when_i_list_scenarios(hss"
+  },
+  {
+    "index": 94,
+    "true_label": 2,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\ndef test_read_not_implemented(self) -> None:\n    hss = self.any_hss()\n    driver = PanelStatusDriver(hss)\n    with self.assertRaises(NotImplementedError):\n        driver.read()\n"
+  },
+  {
+    "index": 95,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_request_formatter_additional_quote_quantity_3_quoted(self) -> None:\n    \"\"\"\n    Given a quoted request\n    When I use RequestFormatter with 'additional_quote_quantity_3' field to export\n    Then it return a dict that contain request additional_quote_quantity_3\n    \"\"\"\n    request = se"
+  },
+  {
+    "index": 96,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2",
+    "input_preview": "Code:\ndef test_serializer_update_name(self) -> None:\n    data = {\"name\": \"updated name\"}\n    serializer = UpdateIRDetectorSerializer(data=data)\n    serializer.is_valid(raise_exception=True)\n    assert_that(serializer.data[\"name\"], is_(\"updated name\"))\n"
+  },
+  {
+    "index": 97,
+    "true_label": 2,
+    "pred_label": null,
+    "raw_generation": "0",
+    "input_preview": "Code:\ndef test_cart_item_create_form__with_prepaid_account_limit_exceeded(self) -> None:\n    \"\"\"\n    Given a user with:\n        a cart\n        a prepaid account with (settings.PREPAID_ACCOUNT_MAXIMUM_AMOUNT - 1)\n    When I serialize a credit pack of 11€\n    Then I get an exception indicating that th"
+  },
+  {
+    "index": 98,
+    "true_label": 3,
+    "pred_label": 1,
+    "raw_generation": "1",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_movements_lighting(self) -> None:\n    \"\"\"\n    Given a hss\n    Given data to create scenario movements_lighting\n    When I create scenario\n    Then 201 with data\n    \"\"\"\n    hss = self.client.hss\n    power_switch_action = self.any_power_switch_action(\n        driver"
+  },
+  {
+    "index": 99,
+    "true_label": 3,
+    "pred_label": null,
+    "raw_generation": "has_mocks == 0",
+    "input_preview": "Code:\n@vcr.use_cassette()\ndef test_migrate_favorites__invalid(self) -> None:\n    \"\"\"\n    Given a an Hss with honeywell panel\n    When I ask the migrate the favorites from 3.4.x to 3.5.x\n    Then I get a suite of 3.5.x compatible favorites\n    \"\"\"\n    hss = self.any_configured_hss(account=test_kiz3_a"
+  },
+  {
+    "index": 100,
+    "true_label": 2,
+    "pred_label": 2,
+    "raw_generation": "2 (medium quality): has_mock",
+    "input_preview": "Code:\ndef test_transaction_creation__order(self) -> None:\n\n    transaction = self.any_transaction(order_profile=order_profiles.marketplace_tmf)\n    assert transaction\n\n    order = Order.objects.first()\n    oi = order.orderitem_first\n    assert_that(transaction.related_deal, is_(oi.washingprogram_nam"
+  }
+]
