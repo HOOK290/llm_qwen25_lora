@@ -2,6 +2,7 @@ import argparse
 import random
 import numpy as np
 import torch
+import inspect
 
 from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, set_seed
@@ -32,7 +33,11 @@ def build_text_with_chat_template(example, tokenizer):
     ]
 
     if hasattr(tokenizer, "apply_chat_template"):
-        text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
+        text = tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=False
+        )
     else:
         text = (
             f"Instruction:\n{instruction}\n\n"
@@ -53,7 +58,7 @@ def main():
 
     # training
     parser.add_argument("--max_length", type=int, default=1024)
-    parser.add_argument("--packing", action="store_true")   # add --packing to enable
+    parser.add_argument("--packing", action="store_true")
     parser.add_argument("--epochs", type=int, default=1)
     parser.add_argument("--lr", type=float, default=2e-4)
     parser.add_argument("--bsz", type=int, default=1)
@@ -69,17 +74,26 @@ def main():
 
     set_all_seeds(args.seed)
 
-    dataset = load_dataset("json", data_files={"train": args.train, "validation": args.val})
+    dataset = load_dataset(
+        "json",
+        data_files={"train": args.train, "validation": args.val}
+    )
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model, trust_remote_code=args.trust_remote_code, use_fast=True)
+    tokenizer = AutoTokenizer.from_pretrained(
+        args.model,
+        trust_remote_code=args.trust_remote_code,
+        use_fast=True
+    )
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
 
-    # dtype
-    compute_dtype = torch.bfloat16 if (torch.cuda.is_available() and torch.cuda.is_bf16_supported()) else torch.float16
+    compute_dtype = (
+        torch.bfloat16
+        if (torch.cuda.is_available() and torch.cuda.is_bf16_supported())
+        else torch.float16
+    )
 
-    # Model load
     quant_config = None
     if args.load_in_4bit:
         quant_config = BitsAndBytesConfig(
@@ -92,8 +106,8 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(
         args.model,
         trust_remote_code=args.trust_remote_code,
-        device_map=None,                 # IMPORTANT for multi-GPU DDP/DeepSpeed
-        dtype=compute_dtype,
+        device_map=None,
+        torch_dtype=compute_dtype,
         quantization_config=quant_config,
         attn_implementation="eager",
     )
@@ -104,11 +118,13 @@ def main():
     if args.load_in_4bit:
         model = prepare_model_for_kbit_training(model)
 
-    # Build training texts
-    dataset["train"] = dataset["train"].map(lambda ex: build_text_with_chat_template(ex, tokenizer))
-    dataset["validation"] = dataset["validation"].map(lambda ex: build_text_with_chat_template(ex, tokenizer))
+    dataset["train"] = dataset["train"].map(
+        lambda ex: build_text_with_chat_template(ex, tokenizer)
+    )
+    dataset["validation"] = dataset["validation"].map(
+        lambda ex: build_text_with_chat_template(ex, tokenizer)
+    )
 
-    # LoRA (robust choice: all-linear)
     peft_config = LoraConfig(
         r=16,
         lora_alpha=32,
@@ -118,41 +134,78 @@ def main():
         target_modules="all-linear",
     )
 
-    sft_args = SFTConfig(
-        output_dir=args.outdir,
-        overwrite_output_dir=True,
-        per_device_train_batch_size=args.bsz,
-        per_device_eval_batch_size=1,
-        gradient_accumulation_steps=args.grad_accum,
-        learning_rate=args.lr,
-        num_train_epochs=args.epochs,
-        logging_steps=10,
-        save_strategy="epoch",
-        eval_strategy="epoch",
-        save_total_limit=2,
-        load_best_model_at_end=True,
-        metric_for_best_model="eval_loss",
-        greater_is_better=False,
-        report_to="none",
-        remove_unused_columns=False,
-        max_length=args.max_length,
-        packing=bool(args.packing),
-        bf16=torch.cuda.is_available() and torch.cuda.is_bf16_supported(),
-        fp16=torch.cuda.is_available() and (not torch.cuda.is_bf16_supported()),
-        deepspeed=args.deepspeed,   # ✅ DeepSpeed config
-    )
+    sft_config_sig = inspect.signature(SFTConfig.__init__)
+    sft_config_params = sft_config_sig.parameters
 
-    trainer = SFTTrainer(
-        model=model,
-        args=sft_args,
-        train_dataset=dataset["train"],
-        eval_dataset=dataset["validation"],
-        processing_class=tokenizer,
-        peft_config=peft_config,
-        formatting_func=lambda example: example["text"],
-    )
+    sft_config_kwargs = {
+        "output_dir": args.outdir,
+        "overwrite_output_dir": True,
+        "per_device_train_batch_size": args.bsz,
+        "per_device_eval_batch_size": 1,
+        "gradient_accumulation_steps": args.grad_accum,
+        "learning_rate": args.lr,
+        "num_train_epochs": args.epochs,
+        "logging_steps": 10,
+        "save_total_limit": 2,
+        "load_best_model_at_end": True,
+        "metric_for_best_model": "eval_loss",
+        "greater_is_better": False,
+        "report_to": "none",
+        "remove_unused_columns": False,
+        "packing": bool(args.packing),
+        "bf16": torch.cuda.is_available() and torch.cuda.is_bf16_supported(),
+        "fp16": torch.cuda.is_available() and (not torch.cuda.is_bf16_supported()),
+        "deepspeed": args.deepspeed,
+    }
+
+    if "save_strategy" in sft_config_params:
+        sft_config_kwargs["save_strategy"] = "epoch"
+    if "evaluation_strategy" in sft_config_params:
+        sft_config_kwargs["evaluation_strategy"] = "epoch"
+    elif "eval_strategy" in sft_config_params:
+        sft_config_kwargs["eval_strategy"] = "epoch"
+
+    length_set_in_config = False
+    if "max_seq_length" in sft_config_params:
+        sft_config_kwargs["max_seq_length"] = args.max_length
+        length_set_in_config = True
+    elif "max_length" in sft_config_params:
+        sft_config_kwargs["max_length"] = args.max_length
+        length_set_in_config = True
+
+    sft_args = SFTConfig(**sft_config_kwargs)
+
+    trainer_sig = inspect.signature(SFTTrainer.__init__)
+    trainer_params = trainer_sig.parameters
+
+    trainer_kwargs = {
+        "model": model,
+        "args": sft_args,
+        "train_dataset": dataset["train"],
+        "eval_dataset": dataset["validation"],
+        "peft_config": peft_config,
+    }
+
+    if "processing_class" in trainer_params:
+        trainer_kwargs["processing_class"] = tokenizer
+    elif "tokenizer" in trainer_params:
+        trainer_kwargs["tokenizer"] = tokenizer
+
+    if "dataset_text_field" in trainer_params:
+        trainer_kwargs["dataset_text_field"] = "text"
+    else:
+        trainer_kwargs["formatting_func"] = lambda example: example["text"]
+
+    if not length_set_in_config:
+        if "max_seq_length" in trainer_params:
+            trainer_kwargs["max_seq_length"] = args.max_length
+        elif "max_length" in trainer_params:
+            trainer_kwargs["max_length"] = args.max_length
+
+    trainer = SFTTrainer(**trainer_kwargs)
 
     trainer.train()
+
     eval_result = trainer.evaluate()
     print("\nValidation results:")
     for k, v in eval_result.items():
