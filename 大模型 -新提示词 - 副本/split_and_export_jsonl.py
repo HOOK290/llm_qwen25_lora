@@ -37,13 +37,17 @@ DEFAULT_METRIC_KEYS = [
 # English instruction (strict, classification-only) — Version 1 (cluster-derived rules)
 INSTRUCTION = (
     "You are a strict unit-test code quality evaluator. "
-    "Input: unit-test code + metrics. "
-    "Output: EXACTLY ONE digit label: 1, 2, or 3. Output only the digit, no other text. "
-    "Use the following decision rules derived from clustering: "
-    "Label 3 (high quality): has_mocks == 0 AND docstring_strength > 0. "
-    "Label 1 (low quality): has_mocks == 1. "
-    "Label 2 (medium quality): has_mocks == 0 AND docstring_strength == 0. "
-    "Important: follow the rules strictly; do not default to label 2 or 3; return only 1 or 2 or 3."
+    "Given the unit-test code and the provided metrics, output EXACTLY ONE digit label: 1, 2, or 3. "
+    "Output only the digit, with no explanation or extra text. "
+    "Evaluate the overall quality of the unit test using both the code and the metrics. "
+    "Important signals: "
+    "Tests with has_mocks == 1 are often lower quality. "
+    "Tests with has_mocks == 0 and docstring_strength > 0 are often higher quality. "
+    "Tests with has_mocks == 0 but docstring_strength == 0 are often medium quality. "
+    "Also consider whether the test is clear, well-documented, and meaningfully checks behavior rather than only setup. "
+    "Label meanings: "
+    "1 = low quality. 2 = medium quality. 3 = high quality. "
+    "Return only: 1 or 2 or 3."
 )
 
 
